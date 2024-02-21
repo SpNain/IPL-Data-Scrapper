@@ -1,11 +1,11 @@
 const request = require("request");
 const cheerio = require("cheerio");
 const getMatchDetails = require("./match");
-// const allMatchesLink = require("./homepage");  //#
+// const allMatchesLink = require("./homepage");
 
 
-function getAllMatches(allMatchesLink){  // yaha pe isko allMatchLink joki Homepage se mila hai pass hoga
-    request(allMatchesLink , function(err , res , data){  // ye hof hai to jaise hi isko data mila ye processData ko call laga dega
+function getAllMatches(allMatchesLink){
+    request(allMatchesLink , function(err , res , data){
        processData(data);
     })
 }
@@ -13,14 +13,14 @@ function getAllMatches(allMatchesLink){  // yaha pe isko allMatchLink joki Homep
 
 function processData(html){  //
     let myDocument = cheerio.load(html);
-    let allATags = myDocument('a[data-hover="Scorecard"]');  // selectors using values // jitne bhi matches us homepage pe the unke scorecard ke anker link aage
+    let allATags = myDocument('a[data-hover="Scorecard"]');  // selectors using values
     // console.log(allATags.length);
     // { "0" : {aTag} , ......... "59" : {aTag} };
 
     for(let i=0 ; i<allATags.length ; i++){
-        let matchLink =  "https://www.espncricinfo.com" + myDocument(allATags[i]).attr("href");  // yha se hume ek ek krke saare matches ke scorecard ke link milte jaayenge 
+        let matchLink =  "https://www.espncricinfo.com" + myDocument(allATags[i]).attr("href"); 
         // console.log(matchLink);           
-        getMatchDetails(matchLink);                                                               // jise hum yha ek ek krke pass krte jaayenge.
+        getMatchDetails(matchLink);
     }   
 }
 
